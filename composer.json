@@ -1,0 +1,31 @@
+{
+    "name": "ali/laravel-sms",
+    "description": "Laravel SMS.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Alikhedmati\\SMS\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ali Khedmati",
+            "email": "ali@khedmati.ir"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^v9.19"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Alikhedmati\\SMS\\SMSServiceProvider"
+            ],
+            "aliases": {
+                "SMS": "Alikhedmati\\SMS\\Facades\\SMS"
+            }
+        }
+    }
+}
