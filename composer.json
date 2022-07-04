@@ -16,7 +16,8 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.1",
-        "laravel/framework": "^v9.19"
+        "laravel/framework": "^v9.19",
+        "laravel/horizon": "^v5.9.8"
     },
     "extra": {
         "laravel": {
