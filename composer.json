@@ -1,11 +1,14 @@
 {
-    "name": "ali/laravel-sms",
+    "name": "alikhedmati/laravel-sms",
     "description": "Laravel SMS.",
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "Alikhedmati\\SMS\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers/helpers.php"
+        ]
     },
     "authors": [
         {
@@ -15,9 +18,9 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.1",
-        "laravel/framework": "^v9.19",
-        "laravel/horizon": "^v5.9.8"
+        "php": "^8",
+        "laravel/framework": "^9",
+        "guzzlehttp/guzzle": "^7"
     },
     "extra": {
         "laravel": {
@@ -28,5 +31,8 @@
                 "SMS": "Alikhedmati\\SMS\\Facades\\SMS"
             }
         }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.6"
     }
 }
