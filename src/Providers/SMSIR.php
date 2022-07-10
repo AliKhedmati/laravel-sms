@@ -59,7 +59,7 @@ class SMSIR extends SMSProvider implements SMSProviderInterface
 
         if (!$request->IsSuccessful) {
 
-            throw new SMSException('Connection to SMS.ir Api was unsuccessful');
+            throw new SMSException($request->Message);
 
         }
     }
@@ -127,7 +127,7 @@ class SMSIR extends SMSProvider implements SMSProviderInterface
          * Store access-token in redis.
          */
 
-        Redis::set('smsir-access-token', encrypt($accessToken));
+        Redis::set('smsir-access-token', encrypt($accessToken), 10);
 
         /**
          * Return access-token.
@@ -161,7 +161,7 @@ class SMSIR extends SMSProvider implements SMSProviderInterface
 
         if (!$request->IsSuccessful) {
 
-            throw new SMSException('SMS.ir api response was unsuccessful');
+            throw new SMSException($request->Message);
 
         }
 
