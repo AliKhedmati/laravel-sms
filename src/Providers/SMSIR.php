@@ -6,7 +6,6 @@ use Alikhedmati\SMS\Contracts\SMSProviderInterface;
 use Alikhedmati\SMS\Exceptions\SMSException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Illuminate\Support\Facades\Redis;
 
 class SMSIR extends SMSProvider implements SMSProviderInterface
 {
@@ -51,7 +50,7 @@ class SMSIR extends SMSProvider implements SMSProviderInterface
 
         if ($request->getStatusCode() != 201) {
 
-            throw new SMSException('Failed to get data from SMS.ir Api', $request->getStatusCode());
+            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
 
         }
 
@@ -90,59 +89,12 @@ class SMSIR extends SMSProvider implements SMSProviderInterface
     }
 
     /**
-     * @throws GuzzleException
-     * @throws SMSException
-     */
-
-    public function getAccessToken(): string
-    {
-        /**
-         * Check if redis has access-token or not.
-         */
-
-        $accessToken = Redis::get('smsir-access-token');
-
-        if ($accessToken){
-
-            /**
-             * todo: Make a call to /profile endpoint to ensure that access token is valid.
-             */
-
-            /**
-             * Return access-token.
-             */
-
-            return decrypt($accessToken);
-
-        }
-
-        /**
-         * Fetch new access-token.
-         */
-
-        $accessToken = $this->authenticate();
-
-
-        /**
-         * Store access-token in redis.
-         */
-
-        Redis::set('smsir-access-token', encrypt($accessToken), 10);
-
-        /**
-         * Return access-token.
-         */
-
-        return $accessToken;
-    }
-
-    /**
      * @return string
      * @throws GuzzleException
      * @throws SMSException
      */
 
-    public function authenticate(): string
+    public function getAccessToken(): string
     {
         $request = $this->client()->post('Token', [
             'json' => [
