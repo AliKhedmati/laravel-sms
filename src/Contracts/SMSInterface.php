@@ -11,4 +11,6 @@ interface SMSInterface
     public function setMobile(string $mobile);
 
     public function setParameters(array $data);
+
+    public function setTemplateId(int $templateId);
 }
