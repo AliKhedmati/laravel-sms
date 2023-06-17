@@ -10,7 +10,7 @@ class SMSServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/laravel-SMS.php',
-            'sms'
+            'laravel-SMS'
         );
 
         $this->app->bind(SMSInterface::class, fn($app) => new SMSManager($app));

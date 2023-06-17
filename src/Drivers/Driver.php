@@ -3,6 +3,7 @@
 namespace Alikhedmati\SMS\Drivers;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Arr;
 
 class Driver
 {
@@ -10,19 +11,19 @@ class Driver
      * @var string
      */
 
-    public string $baseUrl;
+    protected string $baseUrl;
 
     /**
      * @var string
      */
 
-    public string $apiKey;
+    protected string $apiKey;
 
     /**
      * @var string
      */
 
-    public string $mobile;
+    protected string $mobile;
 
     /**
      * @param string $baseurl
@@ -88,15 +89,16 @@ class Driver
     }
 
     /**
+     * @param array $headers
      * @return Client
      */
 
-    protected function getClient(): Client
+    protected function getClient(array $headers = []): Client
     {
-        $headers = [
+        $headers = collect($headers)->merge([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-        ];
+        ])->flatten()->toArray();
 
         return new Client([
             'base_uri'  =>  $this->getBaseurl(),

@@ -26,6 +26,6 @@ class SMSManager extends Manager
 
     public function getDefaultDriver(): string
     {
-
+        return $this->config->get('laravel-SMS.default-driver');
     }
 }

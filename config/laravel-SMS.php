@@ -6,7 +6,7 @@ return [
      * Active SMS Provider.
      */
 
-    'provider'  =>  env('SMS_PROVIDER', 'smsir'),
+    'default-driver'  =>  env('SMS_PROVIDER', 'smsir'),
 
     /*
      * All SMS Providers.

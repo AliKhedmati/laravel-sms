@@ -5,32 +5,41 @@ namespace Alikhedmati\SMS\Drivers;
 use Alikhedmati\SMS\Exceptions\SMSException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Collection;
 
 class SMSIR extends Driver
 {
-    const restApiBase = 'https://RestfulSms.com/api/';
-
-    public string $apiKey;
-
+    const BASE_URI = 'https://RestfulSms.com/api/';
+    protected string $apiKey;
     protected string $secretKey;
-
-    public function __construct()
-    {
-        $this->apiKey = config('sms.providers.smsir.api-key');
-
-        $this->secretKey = config('sms.providers.smsir.secret-key');
-    }
+    protected string $accessToken;
 
     /**
      * @throws GuzzleException
      * @throws SMSException
      */
 
-    public function send(): void
+    public function __construct()
+    {
+        $this->apiKey = config('laravel-SMS.providers.smsir.api-key');
+        $this->secretKey = config('laravel-SMS.providers.smsir.secret-key');
+        $this->baseUrl = self::BASE_URI;
+        $this->accessToken = $this->getAccessToken();
+    }
+
+    /**
+     * @param array $parameters
+     * @param string $templateID
+     * @return Collection
+     * @throws GuzzleException
+     * @throws SMSException
+     */
+
+    public function sendTemplate(array $parameters, string $templateID): Collection
     {
         $params = [];
 
-        foreach ($this->parameters as $param => $value){
+        foreach ($parameters as $param => $value){
 
             $params[] = [
                 'Parameter' =>  $param,
@@ -39,11 +48,13 @@ class SMSIR extends Driver
 
         }
 
-        $request = $this->client(true)->post('UltraFastSend', [
+        $request = $this->getClient([
+            'x-sms-ir-secure-token' =>  $this->accessToken
+        ])->post('UltraFastSend', [
             'json' => [
                 'ParameterArray' => $params,
                 'Mobile' => $this->mobile,
-                'TemplateId' => $this->templateId,
+                'TemplateId' => $templateID,
             ],
         ]);
 
@@ -60,31 +71,8 @@ class SMSIR extends Driver
             throw new SMSException($request->Message);
 
         }
-    }
 
-    /**
-     * @throws GuzzleException
-     * @throws SMSException
-     */
-
-    private function client(bool $isAuthenticated = false): Client
-    {
-        $headers = [
-            'Content-Type' => 'application/json',
-            'accept' => 'application/json',
-        ];
-
-        if ($isAuthenticated) {
-
-            $headers['x-sms-ir-secure-token'] = $this->getAccessToken();
-
-        }
-
-        return new Client([
-            'headers' => $headers,
-            'base_uri' => self::restApiBase,
-            'http_error' => false
-        ]);
+        return collect($request);
     }
 
     /**
@@ -93,9 +81,9 @@ class SMSIR extends Driver
      * @throws SMSException
      */
 
-    public function getAccessToken(): string
+    protected function getAccessToken(): string
     {
-        $request = $this->client()->post('Token', [
+        $request = $this->getClient()->post('Token', [
             'json' => [
                 'UserApiKey' => $this->apiKey,
                 'SecretKey' => $this->secretKey,
