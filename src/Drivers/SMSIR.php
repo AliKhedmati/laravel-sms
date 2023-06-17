@@ -1,17 +1,16 @@
 <?php
 
-namespace Alikhedmati\SMS\Providers;
+namespace Alikhedmati\SMS\Drivers;
 
-use Alikhedmati\SMS\Contracts\SMSProviderInterface;
 use Alikhedmati\SMS\Exceptions\SMSException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class SMSIR extends SMSProvider implements SMSProviderInterface
+class SMSIR extends Driver
 {
     const restApiBase = 'https://RestfulSms.com/api/';
 
-    protected string $apiKey;
+    public string $apiKey;
 
     protected string $secretKey;
 

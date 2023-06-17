@@ -1,8 +1,9 @@
 <?php
 
-namespace Alikhedmati\SMS\Providers;
+namespace Alikhedmati\SMS\Drivers;
 
 use Alikhedmati\SMS\Contracts\SMSProviderInterface;
+use Alikhedmati\SMS\Providers\SMSProvider;
 
 class Kavenegar extends SMSProvider implements SMSProviderInterface
 {

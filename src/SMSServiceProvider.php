@@ -2,30 +2,24 @@
 
 namespace Alikhedmati\SMS;
 
-use Alikhedmati\SMS\Contracts\SMSInterface;
 use Illuminate\Support\ServiceProvider;
 
 class SMSServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/config/sms.php',
+            __DIR__ . '/../config/laravel-SMS.php',
             'sms'
         );
 
-        $this->app->bind(SMSInterface::class, fn() => new SMS());
+        $this->app->bind(SMSInterface::class, fn($app) => new SMSManager($app));
     }
 
-    public function boot()
-    {
-        $this->offerPublishing();
-    }
-
-    protected function offerPublishing()
+    public function boot(): void
     {
         $this->publishes([
-            __DIR__ .'/config/sms.php'   =>   config_path('sms.php')
+            __DIR__ . '/../config/laravel-SMS.php' =>   config_path('laravel-SMS.php')
         ], 'config');
     }
 }
