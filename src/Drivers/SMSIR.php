@@ -2,12 +2,13 @@
 
 namespace Alikhedmati\SMS\Drivers;
 
+use Alikhedmati\SMS\Contracts\DriverInterface;
 use Alikhedmati\SMS\Exceptions\SMSException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
-class SMSIR extends Driver
+class SMSIR extends Driver implements DriverInterface
 {
     const BASE_URL = 'https://RestfulSms.com/api/';
 
@@ -54,18 +55,16 @@ class SMSIR extends Driver
     }
 
     /**
-     * @param array $parameters
-     * @param string $templateID
      * @return Collection
      * @throws GuzzleException
      * @throws SMSException
      */
 
-    public function sendTemplate(string $templateID, array $parameters): Collection
+    public function sendTemplate(): Collection
     {
         $params = [];
 
-        foreach ($parameters as $param => $value){
+        foreach ($this->getTemplateParameters() as $param => $value){
 
             $params[] = [
                 'Parameter' =>  $param,
@@ -79,8 +78,8 @@ class SMSIR extends Driver
         ])->post('UltraFastSend', [
             'json' => [
                 'ParameterArray' => $params,
-                'Mobile' => $this->mobile,
-                'TemplateId' => $templateID,
+                'Mobile' => $this->getMobile(),
+                'TemplateId' => $this->getTemplateID(),
             ],
         ]);
 
@@ -107,7 +106,7 @@ class SMSIR extends Driver
      * @throws SMSException
      */
 
-    public function sendRaw(): Collection
+    public function sendMessage(): Collection
     {
         $request = $this->getClient([
             'x-sms-ir-secure-token' =>  $this->accessToken

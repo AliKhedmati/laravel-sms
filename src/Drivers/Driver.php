@@ -3,7 +3,6 @@
 namespace Alikhedmati\SMS\Drivers;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Arr;
 
 class Driver
 {
@@ -49,16 +48,27 @@ class Driver
 
     protected string $message;
 
+    /**
+     * @var string
+     */
+
+    protected string $templateID;
+
+    /**
+     * @var array
+     */
+
+    protected array $templateParameters;
 
 
     /**
-     * @param string $baseurl
+     * @param string $baseUrl
      * @return $this
      */
 
-    public function setBaseurl(string $baseurl): static
+    public function setBaseUrl(string $baseUrl): static
     {
-        $this->baseUrl = $baseurl;
+        $this->baseUrl = $baseUrl;
 
         return $this;
     }
@@ -67,7 +77,7 @@ class Driver
      * @return string
      */
 
-    public function getBaseurl(): string
+    public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
@@ -136,11 +146,11 @@ class Driver
     }
 
     /**
-     * @param string|null $mobile
+     * @param string $mobile
      * @return $this
      */
 
-    public function setMobile(string|null $mobile): static
+    public function setMobile(string $mobile): static
     {
         $this->mobile = $mobile;
 
@@ -148,10 +158,10 @@ class Driver
     }
 
     /**
-     * @return string|null
+     * @return string
      */
 
-    public function getMobile(): string|null
+    public function getMobile(): string
     {
         return $this->mobile;
     }
@@ -173,5 +183,47 @@ class Driver
             'headers'   =>  $headers,
             'http_errors'   =>  false
         ]);
+    }
+
+    /**
+     * @param string $templateID
+     * @return $this
+     */
+
+    public function setTemplateID(string $templateID): static
+    {
+        $this->templateID = $templateID;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+
+    public function getTemplateID(): string
+    {
+        return $this->templateID;
+    }
+
+    /**
+     * @param array $parameters
+     * @return $this
+     */
+
+    public function setTemplateParameters(array $parameters): static
+    {
+        $this->templateParameters = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+
+    public function getTemplateParameters(): array
+    {
+        return $this->templateParameters;
     }
 }

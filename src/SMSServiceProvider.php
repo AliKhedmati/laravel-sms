@@ -2,6 +2,7 @@
 
 namespace Alikhedmati\SMS;
 
+use Alikhedmati\SMS\Contracts\DriverInterface;
 use Illuminate\Support\ServiceProvider;
 
 class SMSServiceProvider extends ServiceProvider
@@ -13,7 +14,7 @@ class SMSServiceProvider extends ServiceProvider
             'laravel-SMS'
         );
 
-        $this->app->bind(SMSInterface::class, fn($app) => new SMSManager($app));
+        $this->app->bind(DriverInterface::class, fn($app) => new SMSManager($app));
     }
 
     public function boot(): void
