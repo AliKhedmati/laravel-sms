@@ -3,13 +3,12 @@
 namespace Alikhedmati\SMS\Drivers;
 
 use Alikhedmati\SMS\Exceptions\SMSException;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Collection;
 
 class SMSIR extends Driver
 {
-    const BASE_URI = 'https://RestfulSms.com/api/';
+    const BASE_URL = 'https://RestfulSms.com/api/';
     protected string $apiKey;
     protected string $secretKey;
     protected string $accessToken;
@@ -23,7 +22,7 @@ class SMSIR extends Driver
     {
         $this->apiKey = config('laravel-SMS.providers.smsir.api-key');
         $this->secretKey = config('laravel-SMS.providers.smsir.secret-key');
-        $this->baseUrl = self::BASE_URI;
+        $this->baseUrl = self::BASE_URL;
         $this->accessToken = $this->getAccessToken();
     }
 
@@ -35,7 +34,7 @@ class SMSIR extends Driver
      * @throws SMSException
      */
 
-    public function sendTemplate(array $parameters, string $templateID): Collection
+    public function sendTemplate(string $templateID, array $parameters): Collection
     {
         $params = [];
 
@@ -73,6 +72,16 @@ class SMSIR extends Driver
         }
 
         return collect($request);
+    }
+
+    public function sendRaw(string $message): Collection
+    {
+        
+    }
+
+    public function getLog(): Collection
+    {
+        
     }
 
     /**
