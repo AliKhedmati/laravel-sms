@@ -26,6 +26,20 @@ class Driver
     protected string $mobile;
 
     /**
+     * @var string
+     */
+
+    protected string $lineNumber;
+
+    /**
+     * @var string
+     */
+
+    protected string $message;
+
+
+
+    /**
      * @param string $baseurl
      * @return $this
      */
@@ -44,6 +58,48 @@ class Driver
     public function getBaseurl(): string
     {
         return $this->baseUrl;
+    }
+
+    /**
+     * @param string $lineNumber
+     * @return $this
+     */
+
+    public function setLineNumber(string $lineNumber): static
+    {
+        $this->lineNumber = $lineNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+
+    public function getLineNumber(): string
+    {
+        return $this->lineNumber;
+    }
+
+    /**
+     * @param string $message
+     * @return $this
+     */
+
+    public function setMessage(string $message): static
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+
+    public function getMessage(): string
+    {
+        return $this->message;
     }
 
     /**

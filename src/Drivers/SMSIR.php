@@ -4,6 +4,7 @@ namespace Alikhedmati\SMS\Drivers;
 
 use Alikhedmati\SMS\Exceptions\SMSException;
 use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
 class SMSIR extends Driver
@@ -74,14 +75,79 @@ class SMSIR extends Driver
         return collect($request);
     }
 
-    public function sendRaw(string $message): Collection
+    /**
+     * @return Collection
+     * @throws GuzzleException
+     * @throws SMSException
+     */
+
+    public function sendRaw(): Collection
     {
-        
+        $request = $this->getClient([
+            'x-sms-ir-secure-token' =>  $this->accessToken
+        ])->post('MessageSend', [
+            'json' => [
+                'Messages' => [$this->getMessage()],
+                'MobileNumbers' => [$this->getMobile()],
+                'LineNumber' => $this->getLineNumber(),
+            ],
+        ]);
+
+        if ($request->getStatusCode() != 201){
+
+            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
+
+        }
+
+        $request = json_decode($request->getBody()->getContents());
+
+        if (!$request->IsSuccessful) {
+
+            throw new SMSException($request->Message);
+
+        }
+
+        return collect($request);
     }
 
-    public function getLog(): Collection
+    /**
+     * @param Carbon $started_at
+     * @param Carbon $ended_at
+     * @param int $rows
+     * @param int $pages
+     * @return Collection
+     * @throws GuzzleException
+     * @throws SMSException
+     */
+
+    public function getLog(Carbon $started_at, Carbon $ended_at, int $rows, int $pages): Collection
     {
-        
+        $request = $this->getClient([
+            'x-sms-ir-secure-token' =>  $this->accessToken
+        ])->get('MessageSend', [
+            'query' => [
+                'Shamsi_FromDate' => verta($started_at)->format('Y/m/d'),
+                'Shamsi_ToDate' => verta($ended_at)->format('Y/m/d'),
+                'RowsPerPage' => $rows,
+                'RequestedPageNumber' => $pages
+            ],
+        ]);
+
+        if ($request->getStatusCode() != 200){
+
+            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
+
+        }
+
+        $request = json_decode($request->getBody()->getContents());
+
+        if (!$request->IsSuccessful) {
+
+            throw new SMSException($request->Message);
+
+        }
+
+        return collect($request->Messages);
     }
 
     /**
