@@ -10,9 +10,6 @@ use Illuminate\Support\Collection;
 class SMSIR extends Driver
 {
     const BASE_URL = 'https://RestfulSms.com/api/';
-    protected string $apiKey;
-    protected string $secretKey;
-    protected string $accessToken;
 
     /**
      * @throws GuzzleException
@@ -25,6 +22,35 @@ class SMSIR extends Driver
         $this->secretKey = config('laravel-SMS.providers.smsir.secret-key');
         $this->baseUrl = self::BASE_URL;
         $this->accessToken = $this->getAccessToken();
+    }
+
+    /**
+     * @return string
+     * @throws GuzzleException
+     * @throws SMSException
+     */
+
+    public function getCredit(): string
+    {
+        $request = $this->getClient([
+            'x-sms-ir-secure-token' =>  $this->accessToken
+        ])->get('credit');
+
+        if ($request->getStatusCode() != 200){
+
+            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
+
+        }
+
+        $request = json_decode($request->getBody()->getContents());
+
+        if (!$request->IsSuccessful) {
+
+            throw new SMSException($request->Message);
+
+        }
+
+        return $request->Credit;
     }
 
     /**

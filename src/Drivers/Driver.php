@@ -23,6 +23,18 @@ class Driver
      * @var string
      */
 
+    protected string $secretKey;
+
+    /**
+     * @var string
+     */
+
+    protected string $accessToken;
+
+    /**
+     * @var string
+     */
+
     protected string $mobile;
 
     /**
