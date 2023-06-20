@@ -1,8 +1,8 @@
 <?php
 
-use Alikhedmati\SMS\SMS;
+use Alikhedmati\SMS\Facades\SMS;
 
-function sms(): SMS
+function sms(): string
 {
-    return new SMS();
+    return SMS::class;
 }

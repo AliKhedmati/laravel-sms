@@ -7,6 +7,7 @@ use Alikhedmati\SMS\Exceptions\SMSException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 
 class SMSIR extends Driver implements DriverInterface
 {
@@ -19,8 +20,8 @@ class SMSIR extends Driver implements DriverInterface
 
     public function __construct()
     {
-        $this->apiKey = config('laravel-SMS.providers.smsir.api-key');
-        $this->secretKey = config('laravel-SMS.providers.smsir.secret-key');
+        $this->apiKey = Config::get('laravel-SMS.providers.smsir.api-key');
+        $this->secretKey = Config::get('laravel-SMS.providers.smsir.secret-key');
         $this->baseUrl = self::BASE_URL;
         $this->accessToken = $this->getAccessToken();
     }
