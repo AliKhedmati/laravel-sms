@@ -20,10 +20,10 @@ class SMSIR extends Driver implements DriverInterface
 
     public function __construct()
     {
-        $this->apiKey = Config::get('laravel-SMS.providers.smsir.api-key');
-        $this->secretKey = Config::get('laravel-SMS.providers.smsir.secret-key');
-        $this->baseUrl = self::BASE_URL;
-        $this->accessToken = $this->getAccessToken();
+        $this->setBaseUrl(self::BASE_URL);
+        $this->setApiKey(Config::get('laravel-SMS.providers.smsir.api-key'));
+        $this->setSecretKey(Config::get('laravel-SMS.providers.smsir.secret-key'));
+        $this->setAccessToken($this->getInternalAccessToken());
     }
 
     /**
@@ -35,12 +35,12 @@ class SMSIR extends Driver implements DriverInterface
     public function getCredit(): string
     {
         $request = $this->getClient([
-            'x-sms-ir-secure-token' =>  $this->accessToken
+            'x-sms-ir-secure-token' =>  $this->getAccessToken()
         ])->get('credit');
 
-        if ($request->getStatusCode() != 200){
+        if ($request->getStatusCode() != 201){
 
-            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
+            throw new SMSException(json_decode($request->getBody()->getContents())->Message, $request->getStatusCode());
 
         }
 
@@ -86,7 +86,7 @@ class SMSIR extends Driver implements DriverInterface
 
         if ($request->getStatusCode() != 201) {
 
-            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
+            throw new SMSException(json_decode($request->getBody()->getContents())->Message, $request->getStatusCode());
 
         }
 
@@ -119,9 +119,9 @@ class SMSIR extends Driver implements DriverInterface
             ],
         ]);
 
-        if ($request->getStatusCode() != 201){
+        if ($request->getStatusCode() != 200){
 
-            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
+            throw new SMSException(json_decode($request->getBody()->getContents())->Message, $request->getStatusCode());
 
         }
 
@@ -161,7 +161,7 @@ class SMSIR extends Driver implements DriverInterface
 
         if ($request->getStatusCode() != 200){
 
-            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
+            throw new SMSException(json_decode($request->getBody()->getContents())->Message, $request->getStatusCode());
 
         }
 
@@ -182,18 +182,18 @@ class SMSIR extends Driver implements DriverInterface
      * @throws SMSException
      */
 
-    protected function getAccessToken(): string
+    protected function getInternalAccessToken(): string
     {
         $request = $this->getClient()->post('Token', [
             'json' => [
-                'UserApiKey' => $this->apiKey,
-                'SecretKey' => $this->secretKey,
+                'UserApiKey' => $this->getApiKey(),
+                'SecretKey' => $this->getSecretKey(),
             ],
         ]);
 
         if ($request->getStatusCode() != 201) {
 
-            throw new SMSException($request->getBody()->getContents(), $request->getStatusCode());
+            throw new SMSException(json_decode($request->getBody()->getContents())->Message, $request->getStatusCode());
 
         }
 

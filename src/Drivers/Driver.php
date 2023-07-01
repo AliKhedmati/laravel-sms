@@ -3,6 +3,7 @@
 namespace Alikhedmati\SMS\Drivers;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class Driver
 {
@@ -146,6 +147,48 @@ class Driver
     }
 
     /**
+     * @param string $accessToken
+     * @return $this
+     */
+
+    public function setAccessToken(string $accessToken): static
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+
+    public function getAccessToken(): string
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * @param string $secretKey
+     * @return $this
+     */
+
+    public function setSecretKey(string $secretKey): static
+    {
+        $this->secretKey = $secretKey;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+
+    public function getSecretKey(): string
+    {
+        return $this->secretKey;
+    }
+
+    /**
      * @param string $mobile
      * @return $this
      */
@@ -176,10 +219,10 @@ class Driver
         $headers = collect($headers)->merge([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-        ])->flatten()->toArray();
+        ])->toArray();
 
         return new Client([
-            'base_uri'  =>  $this->getBaseurl(),
+            'base_uri'  =>  $this->getBaseUrl(),
             'headers'   =>  $headers,
             'http_errors'   =>  false
         ]);

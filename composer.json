@@ -5,10 +5,7 @@
     "autoload": {
         "psr-4": {
             "Alikhedmati\\SMS\\": "src/"
-        },
-        "files": [
-            "src/Helpers/helpers.php"
-        ]
+        }
     },
     "authors": [
         {
@@ -22,7 +19,8 @@
         "illuminate/http": "^10.0",
         "illuminate/support": "^10.0",
         "guzzlehttp/guzzle": "^7.0",
-        "hekmatinasser/verta": "^8.3"
+        "hekmatinasser/verta": "^8.3",
+        "twilio/sdk": "^7.5"
     },
     "extra": {
         "laravel": {

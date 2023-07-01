@@ -14,7 +14,7 @@ class SMSServiceProvider extends ServiceProvider
             'laravel-SMS'
         );
 
-        $this->app->bind(DriverInterface::class, fn($app) => new SMSManager($app));
+        $this->app->bind('laravel-SMS', fn($app) => new SMSManager($app));
     }
 
     public function boot(): void

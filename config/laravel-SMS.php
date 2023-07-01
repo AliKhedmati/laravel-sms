@@ -17,8 +17,9 @@ return [
             'api-key'   =>  env('SMS_SMSIR_API_KEY'),
             'secret-key'    =>  env('SMS_SMSIR_SECRET_KEY')
         ],
-        'kavenegar' =>  [
-            'api-key'   =>  env('SMS_KAVENEGAR_API_KEY')
-        ]
+        'twilio'    =>  [
+            'account-SID'   =>  env('SMS_TWILIO_ACCOUNT_SID'),
+            'auth-token'   =>  env('SMS_TWILIO_AUTH_TOKEN'),
+        ],
     ],
 ];

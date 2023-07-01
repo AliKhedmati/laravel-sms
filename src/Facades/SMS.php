@@ -12,6 +12,6 @@ class SMS extends Facade
 
     protected static function getFacadeAccessor(): string
     {
-        return \Alikhedmati\SMS\SMS::class;
+        return 'laravel-SMS';
     }
 }
