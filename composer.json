@@ -19,7 +19,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8",
-        "laravel/framework": "^9",
+        "laravel/framework": "^10",
         "guzzlehttp/guzzle": "^7"
     },
     "extra": {
