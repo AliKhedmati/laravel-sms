@@ -1,5 +1,5 @@
 {
-    "name": "alikhedmati/SMS",
+    "name": "alikhedmati/laravel-SMS",
     "description": "Laravel SMS.",
     "license": "MIT",
     "autoload": {
