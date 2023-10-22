@@ -22,8 +22,8 @@ class SMSIR extends Driver implements DriverInterface
     public function __construct()
     {
         $this->setBaseUrl(self::BASE_URL);
-        $this->setApiKey(Config::get('laravel-SMS.providers.smsir.api-key'));
-        $this->setSecretKey(Config::get('laravel-SMS.providers.smsir.secret-key'));
+        $this->setApiKey(Config::get('SMS.providers.smsir.api-key'));
+        $this->setSecretKey(Config::get('SMS.providers.smsir.secret-key'));
         $this->setAccessToken($this->getCachedAccessToken());
     }
 

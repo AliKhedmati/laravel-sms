@@ -1,14 +1,11 @@
 {
-    "name": "alikhedmati/laravel-sms",
+    "name": "alikhedmati/SMS",
     "description": "Laravel SMS.",
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "Alikhedmati\\SMS\\": "src/"
-        },
-        "files": [
-            "src/Helpers/helpers.php"
-        ]
+        }
     },
     "authors": [
         {

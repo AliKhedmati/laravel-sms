@@ -10,17 +10,17 @@ class SMSServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/laravel-SMS.php',
-            'laravel-SMS'
+            __DIR__ . '/../config/SMS.php',
+            'SMS'
         );
 
-        $this->app->bind('laravel-SMS', fn($app) => new SMSManager($app));
+        $this->app->bind('SMS', fn($app) => new SMSManager($app));
     }
 
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/laravel-SMS.php' =>   config_path('laravel-SMS.php')
+            __DIR__ . '/../config/SMS.php' =>   config_path('SMS.php')
         ], 'config');
     }
 }
