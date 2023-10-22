@@ -7,6 +7,7 @@ use Alikhedmati\SMS\Exceptions\SMSException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 
 class SMSIR extends Driver implements DriverInterface
@@ -23,7 +24,7 @@ class SMSIR extends Driver implements DriverInterface
         $this->setBaseUrl(self::BASE_URL);
         $this->setApiKey(Config::get('laravel-SMS.providers.smsir.api-key'));
         $this->setSecretKey(Config::get('laravel-SMS.providers.smsir.secret-key'));
-        $this->setAccessToken($this->getInternalAccessToken());
+        $this->setAccessToken($this->getCachedAccessToken());
     }
 
     /**
@@ -35,7 +36,7 @@ class SMSIR extends Driver implements DriverInterface
     public function getCredit(): string
     {
         $request = $this->getClient([
-            'x-sms-ir-secure-token' =>  $this->getAccessToken()
+            'x-sms-ir-secure-token' =>  $this->accessToken
         ])->get('credit');
 
         if ($request->getStatusCode() != 201){
@@ -178,11 +179,22 @@ class SMSIR extends Driver implements DriverInterface
 
     /**
      * @return string
+     */
+
+    protected function getCachedAccessToken(): string
+    {
+        return Cache::remember('smsir-access-token', Carbon::now()->addMinutes(30), function (){
+            return $this->generateAccessToken();
+        });
+    }
+
+    /**
+     * @return string
      * @throws GuzzleException
      * @throws SMSException
      */
 
-    protected function getInternalAccessToken(): string
+    public function generateAccessToken(): string
     {
         $request = $this->getClient()->post('Token', [
             'json' => [

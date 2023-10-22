@@ -5,7 +5,10 @@
     "autoload": {
         "psr-4": {
             "Alikhedmati\\SMS\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers/helpers.php"
+        ]
     },
     "authors": [
         {
@@ -15,12 +18,9 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.1",
-        "illuminate/http": "^10.0",
-        "illuminate/support": "^10.0",
-        "guzzlehttp/guzzle": "^7.0",
-        "hekmatinasser/verta": "^8.3",
-        "twilio/sdk": "^7.5"
+        "php": "^8.2",
+        "laravel/framework": "^10",
+        "guzzlehttp/guzzle": "^7"
     },
     "extra": {
         "laravel": {
@@ -31,5 +31,8 @@
                 "SMS": "Alikhedmati\\SMS\\Facades\\SMS"
             }
         }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.6"
     }
 }

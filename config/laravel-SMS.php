@@ -3,12 +3,6 @@
 return [
 
     /*
-     * Active SMS Provider.
-     */
-
-    'default-driver'  =>  env('SMS_PROVIDER', 'smsir'),
-
-    /*
      * All SMS Providers.
      */
 
@@ -20,7 +14,6 @@ return [
         'twilio'    =>  [
             'account-SID'   =>  env('SMS_TWILIO_ACCOUNT_SID'),
             'auth-token'   =>  env('SMS_TWILIO_AUTH_TOKEN'),
-            'line-number'   =>  env('SMS_TWILIO_LINE_NUMBER')
         ],
     ],
 ];
