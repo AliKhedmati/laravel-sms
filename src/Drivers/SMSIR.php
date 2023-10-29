@@ -14,11 +14,6 @@ class SMSIR extends Driver implements DriverInterface
 {
     const BASE_URL = 'https://RestfulSms.com/api/';
 
-    /**
-     * @throws GuzzleException
-     * @throws SMSException
-     */
-
     public function __construct()
     {
         $this->setBaseUrl(self::BASE_URL);
@@ -160,7 +155,7 @@ class SMSIR extends Driver implements DriverInterface
             ],
         ]);
 
-        if ($request->getStatusCode() != 200){
+        if ($request->getStatusCode() != 201){
 
             throw new SMSException(json_decode($request->getBody()->getContents())->Message, $request->getStatusCode());
 
