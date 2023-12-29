@@ -20,8 +20,8 @@ class Twilio extends Driver implements DriverInterface
 
     public function __construct()
     {
-        $this->setApiKey(Config::get('SMS.providers.twilio.account-SID'));
-        $this->setSecretKey(Config::get('SMS.providers.twilio.auth-token'));
+        $this->setApiKey(Config::get('SMS.drivers.twilio.account-SID'));
+        $this->setSecretKey(Config::get('SMS.drivers.twilio.auth-token'));
         $this->twilio = new TwilioRestClient(
             username: $this->apiKey,
             password: $this->secretKey

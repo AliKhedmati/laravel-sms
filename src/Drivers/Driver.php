@@ -117,15 +117,6 @@ class Driver
     }
 
     /**
-     * @return string
-     */
-
-    public function getMessage(): string
-    {
-        return $this->message;
-    }
-
-    /**
      * @param string $apiKey
      * @return $this
      */
@@ -222,7 +213,7 @@ class Driver
         ])->toArray();
 
         return new Client([
-            'base_uri'  =>  $this->getBaseUrl(),
+            'base_uri'  =>  $this->baseUrl,
             'headers'   =>  $headers,
             'http_errors'   =>  false
         ]);
@@ -238,15 +229,6 @@ class Driver
         $this->templateID = $templateID;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-
-    public function getTemplateID(): string
-    {
-        return $this->templateID;
     }
 
     /**

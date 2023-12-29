@@ -17,8 +17,8 @@ class SMSIR extends Driver implements DriverInterface
     public function __construct()
     {
         $this->setBaseUrl(self::BASE_URL);
-        $this->setApiKey(Config::get('SMS.providers.smsir.api-key'));
-        $this->setSecretKey(Config::get('SMS.providers.smsir.secret-key'));
+        $this->setApiKey(Config::get('SMS.drivers.smsir.api-key'));
+        $this->setSecretKey(Config::get('SMS.drivers.smsir.secret-key'));
         $this->setAccessToken($this->getCachedAccessToken());
     }
 
@@ -75,8 +75,8 @@ class SMSIR extends Driver implements DriverInterface
         ])->post('UltraFastSend', [
             'json' => [
                 'ParameterArray' => $params,
-                'Mobile' => $this->getMobile(),
-                'TemplateId' => $this->getTemplateID(),
+                'Mobile' => $this->mobile,
+                'TemplateId' => $this->templateID,
             ],
         ]);
 
@@ -109,9 +109,9 @@ class SMSIR extends Driver implements DriverInterface
             'x-sms-ir-secure-token' =>  $this->accessToken
         ])->post('MessageSend', [
             'json' => [
-                'Messages' => [$this->getMessage()],
-                'MobileNumbers' => [$this->getMobile()],
-                'LineNumber' => $this->getLineNumber(),
+                'Messages' => [$this->message],
+                'MobileNumbers' => [$this->mobile],
+                'LineNumber' => $this->lineNumber,
             ],
         ]);
 
@@ -193,8 +193,8 @@ class SMSIR extends Driver implements DriverInterface
     {
         $request = $this->getClient()->post('Token', [
             'json' => [
-                'UserApiKey' => $this->getApiKey(),
-                'SecretKey' => $this->getSecretKey(),
+                'UserApiKey' => $this->apiKey,
+                'SecretKey' => $this->secretKey,
             ],
         ]);
 
