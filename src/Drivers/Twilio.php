@@ -2,7 +2,9 @@
 
 namespace Alikhedmati\SMS\Drivers;
 
-use Alikhedmati\SMS\Contracts\DriverInterface;
+use Alikhedmati\SMS\Contracts\BaseDriver;
+use Alikhedmati\SMS\Contracts\HasLineMessage;
+use Alikhedmati\SMS\Contracts\HasStatistics;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
@@ -10,7 +12,7 @@ use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Client as TwilioRestClient;
 
-class Twilio extends Driver implements DriverInterface
+class Twilio extends Driver implements BaseDriver, HasLineMessage, HasStatistics
 {
     protected TwilioRestClient $twilio;
 
@@ -45,16 +47,6 @@ class Twilio extends Driver implements DriverInterface
         return collect($message->toArray());
     }
 
-    public function sendTemplate(): Collection
-    {
-        // TODO: Implement sendTemplate() method.
-    }
-
-    public function getLog(Carbon $started_at, Carbon $ended_at, int $rows, int $pages): Collection
-    {
-        // TODO: Implement sendTemplate() method.
-    }
-
     /**
      * @return string
      * @throws TwilioException
@@ -63,5 +55,17 @@ class Twilio extends Driver implements DriverInterface
     public function getCredit(): string
     {
         return '£'. $this->twilio->balance->fetch()->balance;
+    }
+
+    /**
+     * @param Carbon $started_at
+     * @param Carbon $ended_at
+     * @param int $rows
+     * @param int $pages
+     * @return Collection
+     */
+    public function getLog(Carbon $started_at, Carbon $ended_at, int $rows, int $pages): Collection
+    {
+        // TODO: Implement getLog() method.
     }
 }

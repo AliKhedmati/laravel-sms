@@ -15,9 +15,10 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8",
-        "laravel/framework": "^10",
-        "guzzlehttp/guzzle": "^7"
+        "php": "^8.3",
+        "illuminate/support": "^10",
+        "guzzlehttp/guzzle": "^7",
+        "twilio/sdk": "^7.13"
     },
     "extra": {
         "laravel": {
@@ -28,8 +29,5 @@
                 "SMS": "Alikhedmati\\SMS\\Facades\\SMS"
             }
         }
-    },
-    "require-dev": {
-        "orchestra/testbench": "^7.6"
     }
 }

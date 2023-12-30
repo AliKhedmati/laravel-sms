@@ -2,7 +2,10 @@
 
 namespace Alikhedmati\SMS\Drivers;
 
-use Alikhedmati\SMS\Contracts\DriverInterface;
+use Alikhedmati\SMS\Contracts\BaseDriver;
+use Alikhedmati\SMS\Contracts\HasLineMessage;
+use Alikhedmati\SMS\Contracts\HasStatistics;
+use Alikhedmati\SMS\Contracts\HasTemplateMessage;
 use Alikhedmati\SMS\Exceptions\SMSException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Carbon;
@@ -10,9 +13,16 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 
-class SMSIR extends Driver implements DriverInterface
+class SMSIR
+    extends
+        Driver
+    implements
+        BaseDriver,
+        HasLineMessage,
+        HasTemplateMessage,
+        HasStatistics
 {
-    const BASE_URL = 'https://RestfulSms.com/api/';
+    const string BASE_URL = 'https://RestfulSms.com/api/';
 
     public function __construct()
     {
@@ -61,7 +71,7 @@ class SMSIR extends Driver implements DriverInterface
     {
         $params = [];
 
-        foreach ($this->getTemplateParameters() as $param => $value){
+        foreach ($this->templateParameters as $param => $value){
 
             $params[] = [
                 'Parameter' =>  $param,
@@ -189,7 +199,7 @@ class SMSIR extends Driver implements DriverInterface
      * @throws SMSException
      */
 
-    public function generateAccessToken(): string
+    protected function generateAccessToken(): string
     {
         $request = $this->getClient()->post('Token', [
             'json' => [

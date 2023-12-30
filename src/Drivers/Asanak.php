@@ -2,14 +2,16 @@
 
 namespace Alikhedmati\SMS\Drivers;
 
-use Alikhedmati\SMS\Contracts\DriverInterface;
-use Illuminate\Support\Carbon;
+
+use Alikhedmati\SMS\Contracts\HasLineMessage;
+use Alikhedmati\SMS\Exceptions\SMSException;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 
-class Asanak extends Driver implements DriverInterface
+class Asanak extends Driver implements HasLineMessage
 {
-    const BASE_URL = 'https://panel.asanak.com/webservice/v1rest/';
+    const string BASE_URL = 'https://panel.asanak.com/webservice/v1rest/';
 
     public function __construct()
     {
@@ -18,23 +20,30 @@ class Asanak extends Driver implements DriverInterface
         $this->setSecretKey(Config::get('SMS.drivers.asanak.password'));
     }
 
+    /**
+     * @return Collection
+     * @throws SMSException
+     * @throws GuzzleException
+     */
+
     public function sendMessage(): Collection
     {
-        // TODO: Implement sendMessage() method.
-    }
+        $request = $this->getClient()->post('sendsms', [
+            'json' => [
+                'username'    => $this->apiKey,
+                'password'    => $this->secretKey,
+                'Source'      => $this->lineNumber,
+                'Message'     => $this->message,
+                'destination' => $this->mobile,
+            ],
+        ]);
 
-    public function sendTemplate(): Collection
-    {
-        // TODO: Implement sendTemplate() method.
-    }
+        if ($request->getStatusCode() != 200){
 
-    public function getLog(Carbon $started_at, Carbon $ended_at, int $rows, int $pages): Collection
-    {
-        // TODO: Implement getLog() method.
-    }
+            throw new SMSException(json_decode($request->getBody()->getContents()), $request->getStatusCode());
 
-    public function getCredit(): string
-    {
-        // TODO: Implement getCredit() method.
+        }
+
+        return collect(json_decode($request->getBody()->getContents()));
     }
 }

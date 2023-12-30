@@ -3,7 +3,6 @@
 namespace Alikhedmati\SMS\Drivers;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Log;
 
 class Driver
 {
@@ -75,15 +74,6 @@ class Driver
     }
 
     /**
-     * @return string
-     */
-
-    public function getBaseUrl(): string
-    {
-        return $this->baseUrl;
-    }
-
-    /**
      * @param string $lineNumber
      * @return $this
      */
@@ -93,15 +83,6 @@ class Driver
         $this->lineNumber = $lineNumber;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-
-    public function getLineNumber(): string
-    {
-        return $this->lineNumber;
     }
 
     /**
@@ -129,15 +110,6 @@ class Driver
     }
 
     /**
-     * @return string
-     */
-
-    public function getApiKey(): string
-    {
-        return $this->apiKey;
-    }
-
-    /**
      * @param string $accessToken
      * @return $this
      */
@@ -147,15 +119,6 @@ class Driver
         $this->accessToken = $accessToken;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-
-    public function getAccessToken(): string
-    {
-        return $this->accessToken;
     }
 
     /**
@@ -171,15 +134,6 @@ class Driver
     }
 
     /**
-     * @return string
-     */
-
-    public function getSecretKey(): string
-    {
-        return $this->secretKey;
-    }
-
-    /**
      * @param string $mobile
      * @return $this
      */
@@ -189,15 +143,6 @@ class Driver
         $this->mobile = $mobile;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-
-    public function getMobile(): string
-    {
-        return $this->mobile;
     }
 
     /**
@@ -241,14 +186,5 @@ class Driver
         $this->templateParameters = $parameters;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-
-    public function getTemplateParameters(): array
-    {
-        return $this->templateParameters;
     }
 }

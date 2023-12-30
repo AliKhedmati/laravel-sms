@@ -5,6 +5,7 @@ namespace Alikhedmati\SMS;
 use Alikhedmati\SMS\Drivers\Asanak;
 use Alikhedmati\SMS\Drivers\SMSIR;
 use Alikhedmati\SMS\Drivers\Twilio;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Manager;
 
 class SMSManager extends Manager
@@ -42,6 +43,6 @@ class SMSManager extends Manager
 
     public function getDefaultDriver(): string
     {
-        return 'smsir';
+        return Config::get('SMS.default-driver');
     }
 }
