@@ -29,7 +29,7 @@ class Asanak extends Driver implements HasLineMessage
     public function sendMessage(): Collection
     {
         $request = $this->getClient()->post('sendsms', [
-            'json' => [
+            'form_params' => [
                 'username'    => $this->apiKey,
                 'password'    => $this->secretKey,
                 'Source'      => $this->lineNumber,
