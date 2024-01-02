@@ -13,14 +13,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 
-class SMSIR
-    extends
-        Driver
-    implements
-        BaseDriver,
-        HasLineMessage,
-        HasTemplateMessage,
-        HasStatistics
+class SMSIR extends Driver implements BaseDriver,
+    HasLineMessage,
+    HasTemplateMessage,
+    HasStatistics
 {
     const string BASE_URL = 'https://RestfulSms.com/api/';
 

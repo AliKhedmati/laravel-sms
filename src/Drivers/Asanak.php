@@ -18,6 +18,9 @@ class Asanak extends Driver implements HasLineMessage
         $this->setBaseUrl(self::BASE_URL);
         $this->setApiKey(Config::get('SMS.drivers.asanak.username'));
         $this->setSecretKey(Config::get('SMS.drivers.asanak.password'));
+        if ($lineNumber = Config::get('SMS.drivers.asanak.line-number')){
+            $this->setLineNumber($lineNumber);
+        }
     }
 
     /**

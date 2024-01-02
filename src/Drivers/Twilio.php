@@ -24,6 +24,9 @@ class Twilio extends Driver implements BaseDriver, HasLineMessage, HasStatistics
     {
         $this->setApiKey(Config::get('SMS.drivers.twilio.account-SID'));
         $this->setSecretKey(Config::get('SMS.drivers.twilio.auth-token'));
+        if ($lineNumber = Config::get('SMS.drivers.twilio.line-number')){
+            $this->setLineNumber($lineNumber);
+        }
         $this->twilio = new TwilioRestClient(
             username: $this->apiKey,
             password: $this->secretKey
