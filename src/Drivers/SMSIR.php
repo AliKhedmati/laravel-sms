@@ -30,6 +30,9 @@ class SMSIR
         $this->setApiKey(Config::get('SMS.drivers.smsir.api-key'));
         $this->setSecretKey(Config::get('SMS.drivers.smsir.secret-key'));
         $this->setAccessToken($this->getCachedAccessToken());
+        if ($lineNumber = Config::get('SMS.drivers.smsir.line-number')){
+            $this->setLineNumber($lineNumber);
+        }
     }
 
     /**
