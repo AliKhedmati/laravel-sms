@@ -16,7 +16,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.3",
-        "illuminate/support": "^10",
+        "illuminate/support": "^8||^9||^10",
         "guzzlehttp/guzzle": "^7",
         "twilio/sdk": "^7.13"
     },
